@@ -1,0 +1,22 @@
+#!/bin/bash
+source ./data/config
+
+#Launch rights
+chmod +x ./universalScripts/launchRights
+./universalScripts/launchRights
+
+#Copy templates
+cp -a ./templates/. $TMP_FOLDER
+./scriptsForInstalling/changeTemplates
+
+
+#Installation
+#./universalScripts/systemUpdate
+./universalScripts/unzipMaster
+./scriptsForInstalling/netCoreInstall
+./scriptsForInstalling/dockerInstall
+./scriptsForInstalling/postgresInstall
+./scriptsForInstalling/apacheInstall
+./scriptsForInstalling/masterInstall
+
+rm -r $TMP_FOLDER

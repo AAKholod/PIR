@@ -1,0 +1,12 @@
+#Создание алиаса для распаковщика
+set-alias sz "$env:ProgramFiles\7-Zip\7z.exe"
+
+#Переменные: путь до архива и место сохранения распаковки архива соответственно
+Set-Variable pathToArchive -Value "C:\Users\$env:UserName\Desktop\RenameFiles.7z"
+Set-Variable unzipArchive -Value "C:\Users\$env:UserName\Desktop\unzipArchive"
+
+#Распаковка архива
+sz x  $pathToArchive "-o$($unzipArchive)"
+
+#Используя конвейер из команд, изменить кодировку в имени файлов 
+Get-ChildItem -Path $unzipArchive -Recurse -File | Rename-Item -NewName { [System.Uri]::UnescapeDataString($_.Name) }

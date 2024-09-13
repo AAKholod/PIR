@@ -1,0 +1,8 @@
+#!/bin/bash
+#Install postgres
+source ./data/config
+
+docker pull postgres
+
+docker run -d --restart unless-stopped --name $DOCKER_CONTAINER_NAME -e POSTGRES_PASSWORD=$POSTGRE_PASSWORD -d -p $POSTGRE_HOST_PORT:$POSTGRE_DOCKER_PORT -v $DOCKER_POSTGRE_VOLUME:/var/lib/postgresql/data postgres
+

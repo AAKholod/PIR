@@ -1,0 +1,43 @@
+#!/bin/bash
+#You can't  use the symbol %
+
+#Global
+TMP_FOLDER="./tmp"
+ZIP_MASTER="./master"
+
+#BasicSettings(базовая конфигурация при настройке мастера, менять при установке тенанта
+# или по требованию)
+PIXMASTER_FOLDER="/var/pixmaster"
+MASTER_SERVICE_NAME="Master.service"
+MASTER_PORT="5000"
+APACHE_CONFIG_FILE_NAME="netcore.conf"
+ERROR_LOG_NAME="netcore-error.log"
+CUSTOM_LOG_NAME="netcore-access.log"
+VIRTUAL_HOST_PORT="443"
+
+#Apache 
+APACHE_SERVER_NAME="www.CurrentDomain.com"
+APACHE_CERT_C="RU"
+APACHE_CERT_ST="Msk"
+APACHE_CERT_L="Msk"
+APACHE_CERT_O="YourCompany"
+APACHE_CERT_OU="IT Department"
+APACHE_CERT_CN1="master.yourcompany.local"
+APACHE_CERT_CN2="master"
+
+#Postgre SQL
+POSTGRE_USER="postgres"
+POSTGRE_PASSWORD="123456789"
+POSTGRE_HOST="localhost"
+POSTGRE_PORT="5432"
+POSTGRE_DATABASE="master_test2"
+POSTGRE_POOLING="true"
+POSTGRE_DOCKER_PORT="5432"
+POSTGRE_HOST_PORT="5432"
+
+#Docker
+DOCKER_POSTGRE_VOLUME=$HOME"/docker/volumes/postgres"
+DOCKER_CONTAINER_NAME="pix-postgres"
+
+
+

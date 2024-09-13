@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo $1
+
+VERSION_FILE_NAME=PIX_Master_$1\(net6\).zip 
+wget -O master https\://dl.pixrpa.ru/download/master/$VERSION_FILE_NAME

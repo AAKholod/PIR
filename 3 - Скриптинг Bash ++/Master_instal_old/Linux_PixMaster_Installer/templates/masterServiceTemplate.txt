@@ -1,0 +1,14 @@
+[Unit]
+Description=ASP .NET Web Application
+[Service]
+#Указываем путь к директории с установленным Мастером
+WorkingDirectory=<CONFIG_PIXMASTER_FOLDER>
+ExecStart=/usr/bin/dotnet <CONFIG_PIXMASTER_FOLDER>/Master.dll
+Restart=always
+RestartSec=10
+SyslogIdentifier=netcore-demo
+User=www-data
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=ASPNETCORE_URLS=http://localhost:<CONFIG_MASTER_PORT>
+[Install]
+WantedBy=multi-user.target

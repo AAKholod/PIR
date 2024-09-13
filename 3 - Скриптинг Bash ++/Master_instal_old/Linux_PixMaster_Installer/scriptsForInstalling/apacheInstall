@@ -1,0 +1,22 @@
+#!/bin/bash
+source ./data/config
+
+CERT_SUBJ="/C="$APACHE_CERT_C"/ST="$APACHE_CERT_ST"/L="$APACHE_CERT_L"/O="$APACHE_CERT_O"/OU="$APACHE_CERT_OU"/CN="$APACHE_CERT_CN
+
+#Install apache
+apt-get -y install apache2
+
+#Create certificate
+mkdir /etc/apache2/ssl
+openssl req -new -x509 -days 1461 -nodes -out /etc/apache2/ssl/cert.pem -keyout /etc/apache2/ssl/cert.key -subj "$CERT_SUBJ"
+a2enmod proxy_http proxy_html proxy_wstunnel ssl
+a2enmod rewrite
+systemctl restart apache2
+
+#Create apache config file
+cat $TMP_FOLDER/apacheConfig.txt > /etc/apache2/conf-enabled/$APACHE_CONFIG_FILE_NAME
+
+#Restart apache
+apachectl configtest
+service apache2 restart
+

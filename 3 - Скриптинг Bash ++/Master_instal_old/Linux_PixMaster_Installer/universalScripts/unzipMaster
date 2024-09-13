@@ -1,0 +1,8 @@
+#!/bin/bash
+source ./data/config
+
+apt-get -y update
+apt-get -y install zip
+
+mkdir -p $PIXMASTER_FOLDER
+unzip $ZIP_MASTER -d $PIXMASTER_FOLDER

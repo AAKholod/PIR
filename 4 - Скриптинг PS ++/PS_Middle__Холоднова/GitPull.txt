@@ -1,0 +1,10 @@
+$currentDirectory = 'C:\Users\AAKholodnova\Documents\Pix\ПИР_Холоднова\Номер не помню\Задание3'
+
+$allDirectory = Get-ChildItem $currentDirectory -Name -Directory 
+
+Foreach ($dir in $allDirectory) {
+	$dir
+	cd $dir 
+	git pull
+	cd ..
+}

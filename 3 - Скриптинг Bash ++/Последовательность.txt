@@ -1,0 +1,78 @@
+https://dotnet.microsoft.com/en-us/download/dotnet/7.0   
+--- Установка dotnet-sdk ---
+1) sudo apt-get update
+2) sudo apt-get install dotnet-sdk-7.0
+=3) export DOTNET_ROOT=/usr/share/dotnet
+=4) export PATH=$PATH:$DOTNET_ROOT
+=5) sudo nano /etc/bash.bashrc
+
+--- Установка apache2 ---
+1) cd ~
+2) sudo openssl req -new -x509 -days 1461 -nodes -out cert.pem -keyout cert.key -subj "/C=RU/ST=Msk/L=Msk/O=PIX/OU=IT Department/CN=pixmaster"
+3) sudo apt-get install apache2
+4) sudo a2enmod proxy_http proxy_html proxy_wstunnel ssl
+5) sudo a2enmod rewrite
+6) sudo systemctl restart apache2
+7) cd /etc/apache2
+8) sudo mkdir ssl
+9) cd ssl
+10) sudo cp ~/cert.pem /etc/apache2/ssl
+11) sudo cp ~/cert.key /etc/apache2/ssl
+12) sudo nano /etc/apache2/apache2.conf
+      ServerName pixmaster
+
+sudo nano /etc/apache2/conf-enabled/pixmaster.conf
+
+<VirtualHost *:443>
+  ServerName pixmaster
+  
+  #Замените {DOMAINNAME} на доменное имя вашего сервера, такое же, как прописано в SSL-сертификате
+  
+  DocumentRoot /var/pixmaster 
+  # стандартная папка установки PIX Master
+  
+  SSLEngine on
+  SSLCertificateFile ssl/cert.pem
+  SSLCertificateKeyFile ssl/cert.key
+  #SSLCertificateChainFile ssl/cert.ca-bundle
+  ProxyPreserveHost On
+  ProxyPass / http://127.0.0.1:5000/
+  ProxyPassReverse / http://127.0.0.1:5000/
+  RewriteEngine on
+  RewriteCond %{HTTPS} off
+  RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+  RewriteCond %{HTTP:UPGRADE} ^WebSocket$ [NC]
+  RewriteCond %{HTTP:CONNECTION} Upgrade$ [NC]
+  RewriteRule /(.*) ws://127.0.0.1:5000/$1 [P]
+  ErrorLog /var/log/apache2/pixmaster-error.log
+  CustomLog /var/log/apache2/pixmaster-access.log common
+</VirtualHost>
+13) sudo apachectl configtest
+14) sudo service apache2 restart
+
+--- Установка Postgre ---
+1)  apt show postgresql
+2) sudo apt install postgresql postgresql-contrib
+3) sudo su - postgres
+4) psql
+5) conninfo
+6) sudo -u postgres psql template1
+7) ALTER USER postgres with encrypted password 'your_password';
+8) \q
+9) exit
+
+=1) apt install docker.io
+=2) systemctl start docker
+=3) systemctl enable docker
+=4) docker pull postgres
+=5) sudo docker run -d --restart unless-stopped --name pix-postgres -e POSTGRES_PASSWORD=123456789 -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres
+
+---Установка сервиса Мастера---
+1) unzip PIX_Master_1.27.1.zip -d ~/PIX_Master_1.27.1
+2) sudo mkdir /var/pixmaster
+3) sudo mv ~/PIX_Master_1.27.1/Master/* -t /var/pixmaster
+4) sudo mkdir /var/pixmaster/MasterLog
+5) sudo chmod 777 /var/pixmaster/MasterLog
+6) sudo mkdir /var/pixmaster/Keys
+7) sudo chmod 777 /var/pixmaster/Keys
+

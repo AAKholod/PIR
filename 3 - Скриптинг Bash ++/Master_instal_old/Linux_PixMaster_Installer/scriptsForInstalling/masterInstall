@@ -1,0 +1,22 @@
+#!/bin/bash
+source ./data/config
+
+#Add MasterLogForlder
+mkdir $PIXMASTER_FOLDER/MasterLog
+chmod 744 $PIXMASTER_FOLDER/MasterLog
+chown www-data $PIXMASTER_FOLDER/MasterLog
+
+#Create Keys folder
+mkdir $PIXMASTER_FOLDER/Keys
+chmod 777 $PIXMASTER_FOLDER/Keys
+
+#Copy appsettings.json
+cat $TMP_FOLDER/appsettingsTemplate.txt > $PIXMASTER_FOLDER/appsettings.json
+
+#Copy  master.service
+cat  $TMP_FOLDER/masterServiceTemplate.txt > /etc/systemd/system/$MASTER_SERVICE_NAME
+
+#start master
+systemctl enable $MASTER_SERVICE_NAME
+systemctl start $MASTER_SERVICE_NAME
+

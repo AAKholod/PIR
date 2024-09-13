@@ -1,0 +1,28 @@
+#!/bin/bash
+source ./data/config
+
+#Launch rights
+chmod +x ./universalScripts/launchRights
+./universalScripts/launchRights
+
+#Copy templates
+cp -a ./templates/. $TMP_FOLDER
+./scriptsForInstalling/changeTemplates
+
+#Installation
+./universalScripts/unzipMaster
+./scriptsForInstalling/masterInstall
+
+#Create apache config file
+cat $TMP_FOLDER/apacheConfig.txt > /etc/apache2/conf-enabled/$APACHE_CONFIG_FILE_NAME
+
+#Add Port
+cat /etc/apache2/ports.conf > $TMP_FOLDER/ports.txt
+sed -i "s%</IfModule>%\tListen $VIRTUAL_HOST_PORT\n</IfModule>%"  $TMP_FOLDER/ports.txt
+cat $TMP_FOLDER/ports.txt > /etc/apache2/ports.conf
+
+#Restart apache
+apachectl configtest
+service apache2 restart
+
+rm -r $TMP_FOLDER

@@ -1,0 +1,23 @@
+{
+"Provider": "PostgreSQL",
+"CryptographyKeysFolder": "Keys",
+"ConnectionStrings": {
+"DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=master_test;Trusted_Connection=True;MultipleActiveResultSets=true;Persist Security Info=False;",
+"PostgreSqlConnection": "User ID=<CONFIG_POSTGRE_USER>;Password=<CONFIG_POSTGRE_PASSWORD>;Host=<CONFIG_POSTGRE_HOST>;Port=<CONFIG_POSTGRE_PORT>;Database=<CONFIG_POSTGRE_DATABASE>;Pooling=<CONFIG_POSTGRE_POOLING>;"
+},
+"Logging": {
+"LogLevel": {
+"Default": "Warning",
+"Hangfire": "Information"
+}
+},
+"AllowedHosts": "*",
+"PasswordValidationOptions": {
+"RequiredLength": "8",
+"RequireNonAlphanumeric": "true",
+"RequireLowercase": "true",
+"RequireUppercase": "true",
+"RequireDigit": "true"
+},
+"UseSwagger": "false"
+}

@@ -1,0 +1,36 @@
+#!/bin/bash
+source ./data/config
+CURRENT_DATE=$(date +%d%m%Y)
+BACKUP_FOLDER=$PIXMASTER_FOLDER"_"$CURRENT_DATE"_backup"
+
+#Launch rights
+chmod +x ./universalScripts/launchRights
+./universalScripts/launchRights
+
+#Stop Master
+systemctl stop $MASTER_SERVICE_NAME
+
+#Copy settings
+mkdir -p $TMP_FOLDER
+cp -a $PIXMASTER_FOLDER/. $BACKUP_FOLDER
+mv -f $PIXMASTER_FOLDER/appsettings.json $TMP_FOLDER
+mv -f $PIXMASTER_FOLDER/MasterLog $TMP_FOLDER
+mv -f $PIXMASTER_FOLDER/Keys $TMP_FOLDER
+
+#Delete Master
+rm -rf $PIXMASTER_FOLDER/*
+
+#Unzip New Master
+./universalScripts/unzipMaster
+
+#Move appsettings.json
+mv -f $TMP_FOLDER/appsettings.json $PIXMASTER_FOLDER
+mv -f $TMP_FOLDER/MasterLog $PIXMASTER_FOLDER
+mv -f $TMP_FOLDER/Keys $PIXMASTER_FOLDER
+
+#start master
+systemctl start $MASTER_SERVICE_NAME
+
+#Delete TMP_FOLDER
+rm -r $TMP_FOLDER
+echo $BACKUP_FOLDER

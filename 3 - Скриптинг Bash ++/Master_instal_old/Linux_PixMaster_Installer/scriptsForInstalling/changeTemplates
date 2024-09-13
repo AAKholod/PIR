@@ -1,0 +1,22 @@
+#!/bin/bash
+source ./data/config
+
+#Change apacheConfig template
+sed -i "s%<CONFIG_VIRTUAL_HOST_PORT>%$VIRTUAL_HOST_PORT%" $TMP_FOLDER/apacheConfig.txt
+sed -i "s%<CONFIG_APACHE_SERVER_NAME>%$APACHE_SERVER_NAME%" $TMP_FOLDER/apacheConfig.txt
+sed -i "s%<CONFIG_PIXMASTER_FOLDER>%$PIXMASTER_FOLDER%" $TMP_FOLDER/apacheConfig.txt
+sed -i "s%<CONFIG_ERROR_LOG_NAME>%$ERROR_LOG_NAME%" $TMP_FOLDER/apacheConfig.txt
+sed -i "s%<CONFIG_CUSTOM_LOG_NAME>%$CUSTOM_LOG_NAME%" $TMP_FOLDER/apacheConfig.txt
+sed -i "s%<CONFIG_MASTER_PORT>%$MASTER_PORT%" $TMP_FOLDER/apacheConfig.txt
+
+#Change appsettingsTemplate.txt
+sed -i "s%<CONFIG_POSTGRE_USER>%$POSTGRE_USER%" $TMP_FOLDER/appsettingsTemplate.txt
+sed -i "s%<CONFIG_POSTGRE_PASSWORD>%$POSTGRE_PASSWORD%" $TMP_FOLDER/appsettingsTemplate.txt
+sed -i "s%<CONFIG_POSTGRE_HOST>%$POSTGRE_HOST%" $TMP_FOLDER/appsettingsTemplate.txt
+sed -i "s%<CONFIG_POSTGRE_PORT>%$POSTGRE_PORT%" $TMP_FOLDER/appsettingsTemplate.txt
+sed -i "s%<CONFIG_POSTGRE_DATABASE>%$POSTGRE_DATABASE%" $TMP_FOLDER/appsettingsTemplate.txt
+sed -i "s%<CONFIG_POSTGRE_POOLING>%$POSTGRE_POOLING%" $TMP_FOLDER/appsettingsTemplate.txt
+
+#Change  masterServiceTemplate.txt
+sed -i "s%<CONFIG_PIXMASTER_FOLDER>%$PIXMASTER_FOLDER%" $TMP_FOLDER/masterServiceTemplate.txt
+sed -i "s%<CONFIG_MASTER_PORT>%$MASTER_PORT%" $TMP_FOLDER/masterServiceTemplate.txt

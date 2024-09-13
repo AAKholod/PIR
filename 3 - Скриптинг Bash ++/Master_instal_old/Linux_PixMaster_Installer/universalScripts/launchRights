@@ -1,0 +1,15 @@
+#!/bin/bash
+source ./data/config
+
+#Launch rights
+chmod +x ./universalScripts/systemUpdate
+chmod +x ./universalScripts/unzipMaster
+
+chmod +x ./scriptsForInstalling/netCoreInstall
+chmod +x ./scriptsForInstalling/apacheInstall
+chmod +x ./scriptsForInstalling/dockerInstall
+chmod +x ./scriptsForInstalling/postgresInstall
+chmod +x ./scriptsForInstalling/masterInstall
+chmod +x ./scriptsForInstalling/changeTemplates
+
+chmod +x ./addTenant

@@ -1,0 +1,9 @@
+#!/bin/bash
+#Install docker
+apt update -y
+apt install -y docker.io
+
+#Enable docker
+systemctl start docker
+systemctl enable docker
+
